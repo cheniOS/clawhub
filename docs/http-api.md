@@ -205,6 +205,19 @@ Status codes:
 - `404`: skill/user not found
 - `500`: internal server error
 
+### Transfer ownership endpoints
+
+- `POST /api/v1/skills/{slug}/transfer`
+  - Body: `{ "toUserHandle": "target_handle", "message": "optional" }`
+  - Response: `{ "ok": true, "transferId": "skillOwnershipTransfers:...", "toUserHandle": "target_handle", "expiresAt": 1730000000000 }`
+- `POST /api/v1/skills/{slug}/transfer/accept`
+- `POST /api/v1/skills/{slug}/transfer/reject`
+- `POST /api/v1/skills/{slug}/transfer/cancel`
+  - Response (accept/reject/cancel): `{ "ok": true, "skillSlug": "demo-skill?" }`
+- `GET /api/v1/transfers/incoming`
+- `GET /api/v1/transfers/outgoing`
+  - Response shape: `{ "transfers": [{ "_id": "...", "skill": { "slug": "demo", "displayName": "Demo" }, "fromUser"|"toUser": { "handle": "..." }, "message": "...", "requestedAt": 0, "expiresAt": 0 }] }`
+
 ### `POST /api/v1/users/ban`
 
 Ban a user and hard-delete owned skills (moderator/admin only).
